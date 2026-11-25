@@ -429,6 +429,34 @@ font-size:2.7rem;
         left .08s linear,
         top .08s linear;
 }
+
+/* Keyboard accessibility (#14) */
+
+#close-popup{
+width:auto;
+padding:0;
+border:none;
+border-radius:0;
+background:none;
+color:inherit;
+font:inherit;
+cursor:pointer;
+}
+
+#close-popup:hover{
+transform:none;
+box-shadow:none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.search-box input:focus-visible,
+.checkout-card input:focus-visible{
+outline:2px solid #00c2ff;
+outline-offset:2px;
+}
+
 </style>
 </head>
 <body>
@@ -617,8 +645,8 @@ setTimeout(() => {
 
     <div id="popup-content">
 
-        <span onclick="closePopup()"
-        id="close-popup">✖</span>
+        <button type="button" onclick="closePopup()"
+        id="close-popup" aria-label="Close">✖</button>
 
         <h2 id="popup-title"></h2>
 

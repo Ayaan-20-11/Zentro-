@@ -374,6 +374,58 @@ padding:20px;
 
 }
 
+
+/* Keyboard accessibility (#14) */
+
+.card{
+position:relative;
+}
+
+.card h3 button{
+width:auto;
+padding:0;
+border:none;
+border-radius:0;
+background:none;
+color:inherit;
+font:inherit;
+cursor:pointer;
+}
+
+.card h3 button:hover{
+transform:none;
+box-shadow:none;
+}
+
+.card h3 button::after{
+content:"";
+position:absolute;
+inset:0;
+}
+
+.card-content > button{
+position:relative;
+z-index:1;
+}
+
+.icons button.cart-button{
+background:none;
+border:none;
+padding:0;
+color:inherit;
+font:inherit;
+cursor:pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.search-box input:focus-visible,
+.checkout-card input:focus-visible{
+outline:2px solid #00c2ff;
+outline-offset:2px;
+}
+
 </style>
 </head>
 <body>
@@ -398,9 +450,9 @@ onkeyup="searchProducts()">
 
 <span>❤️</span>
 
-<span onclick="openCart()" style="cursor:pointer;">
+<button type="button" class="cart-button" onclick="openCart()" aria-label="Open cart">
 🛍️ <span id="cart-count">0</span>
-</span>
+</button>
 
 <button onclick="clearCart()">
 Reset
@@ -454,205 +506,178 @@ Premium Shopping Experience For Everyone
 
 <div class="products reveal">
 
-<div class="card product-card"
-onclick="showProduct(this)">
-
-<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9">
-
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9" alt="iPhone 16">
 <div class="card-content">
-
-<h3>iPhone 16</h3>
-
-<div class="price">
-₹79,999
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">iPhone 16</button>
+</h3>
+<div class="price">₹79,999</div>
+<button type="button" onclick="addToCart('iPhone 16',79999)">Add To Cart</button>
 </div>
-  
-<button onclick="event.stopPropagation();addToCart('iPhone 16',79999)">
-Add To Cart
-</button>
-
 </div>
 
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-
-<img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12">
-
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12" alt="Smart Watch">
 <div class="card-content">
-
-<h3>Smart Watch</h3>
-
-<div class="price">
-₹4,999
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Smart Watch</button>
+</h3>
+<div class="price">₹4,999</div>
+<button type="button" onclick="addToCart('Smart Watch',4999)">Add To Cart</button>
+</div>
 </div>
 
-<button onclick="event.stopPropagation();addToCart('Smart Watch',4999)">
-Add To Cart
-</button>
-
-</div>
-
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-
-<img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e">
-
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" alt="Headphones">
 <div class="card-content">
-
-<h3>Headphones</h3>
-
-<div class="price">
-₹2,999
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Headphones</button>
+</h3>
+<div class="price">₹2,999</div>
+<button type="button" onclick="addToCart('Headphones',2999)">Add To Cart</button>
+</div>
 </div>
 
-<button onclick="event.stopPropagation();addToCart('Headphones',2999)">
-Add To Cart
-</button>
-</div>
-
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-
-<img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a">
-
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a" alt="Sneakers">
 <div class="card-content">
-
-<h3>Sneakers</h3>
-
-<div class="price">
-₹5,499
-</div>
-
-<button onclick="event.stopPropagation();addToCart('Sneakers',5499)">
-Add To Cart
-</button>
-
-</div>
-
-</div>
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1624096104992-9b4fa3a279dd">
-<div class="card-content">
-<h3>Apple Watch</h3>
-<div class="price">₹34,999</div>
-<button onclick="event.stopPropagation();addToCart('Apple Watch',34999)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
-<div class="card-content">
-<h3>Nike Shoes</h3>
-<div class="price">₹6,999</div>
-<button onclick="event.stopPropagation();addToCart('Nike Shoes',6999)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1770278881151-7cd11eb115b0">
-<div class="card-content">
-<h3>Laptop</h3>
-<div class="price">₹59,999</div>
-<button onclick="event.stopPropagation();addToCart('Laptop',59999)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f">
-<div class="card-content">
-<h3>Camera</h3>
-<div class="price">₹45,999</div>
-<button onclick="event.stopPropagation();addToCart('Camera',45999)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7">
-<div class="card-content">
-<h3>Gaming Mouse</h3>
-<div class="price">₹1,999</div>
-<button onclick="event.stopPropagation();addToCart('Gaming Mouse',1999)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef">
-<div class="card-content">
-<h3>Mechanical Keyboard</h3>
-<div class="price">₹3,499</div>
-<button onclick="event.stopPropagation();addToCart('Mechanical Keyboard',3499)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1717865499857-ec35ce6e65fa">
-<div class="card-content">
-<h3>MacBook Air</h3>
-<div class="price">₹99,999</div>
-<button onclick="event.stopPropagation();addToCart('MacBook Air',99999)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1">
-<div class="card-content">
-<h3>Bluetooth Speaker</h3>
-<div class="price">₹2,499</div>
-<button onclick="event.stopPropagation();addToCart('Bluetooth Speaker',2499)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f">
-<div class="card-content">
-<h3>Sunglasses</h3>
-<div class="price">₹1,499</div>
-<button onclick="event.stopPropagation();addToCart('Sunglasses',1499)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
-<div class="card-content">
-<h3>T-Shirt</h3>
-<div class="price">₹799</div>
-<button onclick="event.stopPropagation();addToCart('T-Shirt',799)">Add To Cart</button>
-</div>
-</div>
-
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1597892657493-6847b9640bac">
-<div class="card-content">
-<h3>Running Shoes</h3>
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Sneakers</button>
+</h3>
 <div class="price">₹5,499</div>
-<button onclick="event.stopPropagation();addToCart('Running Shoes',5499)">Add To Cart</button>
+<button type="button" onclick="addToCart('Sneakers',5499)">Add To Cart</button>
+</div>
+</div>
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1624096104992-9b4fa3a279dd" alt="Apple Watch">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Apple Watch</button>
+</h3>
+<div class="price">₹34,999</div>
+<button type="button" onclick="addToCart('Apple Watch',34999)">Add To Cart</button>
 </div>
 </div>
 
-<div class="card product-card"
-onclick="showProduct(this)">
-<img src="https://images.unsplash.com/photo-1670177257750-9b47927f68eb">
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" alt="Nike Shoes">
 <div class="card-content">
-<h3>Luxury Watch</h3>
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Nike Shoes</button>
+</h3>
+<div class="price">₹6,999</div>
+<button type="button" onclick="addToCart('Nike Shoes',6999)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1770278881151-7cd11eb115b0" alt="Laptop">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Laptop</button>
+</h3>
+<div class="price">₹59,999</div>
+<button type="button" onclick="addToCart('Laptop',59999)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f" alt="Camera">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Camera</button>
+</h3>
+<div class="price">₹45,999</div>
+<button type="button" onclick="addToCart('Camera',45999)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7" alt="Gaming Mouse">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Gaming Mouse</button>
+</h3>
+<div class="price">₹1,999</div>
+<button type="button" onclick="addToCart('Gaming Mouse',1999)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef" alt="Mechanical Keyboard">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Mechanical Keyboard</button>
+</h3>
+<div class="price">₹3,499</div>
+<button type="button" onclick="addToCart('Mechanical Keyboard',3499)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1717865499857-ec35ce6e65fa" alt="MacBook Air">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">MacBook Air</button>
+</h3>
+<div class="price">₹99,999</div>
+<button type="button" onclick="addToCart('MacBook Air',99999)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1" alt="Bluetooth Speaker">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Bluetooth Speaker</button>
+</h3>
+<div class="price">₹2,499</div>
+<button type="button" onclick="addToCart('Bluetooth Speaker',2499)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f" alt="Sunglasses">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Sunglasses</button>
+</h3>
+<div class="price">₹1,499</div>
+<button type="button" onclick="addToCart('Sunglasses',1499)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab" alt="T-Shirt">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">T-Shirt</button>
+</h3>
+<div class="price">₹799</div>
+<button type="button" onclick="addToCart('T-Shirt',799)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1597892657493-6847b9640bac" alt="Running Shoes">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Running Shoes</button>
+</h3>
+<div class="price">₹5,499</div>
+<button type="button" onclick="addToCart('Running Shoes',5499)">Add To Cart</button>
+</div>
+</div>
+
+<div class="card product-card">
+<img src="https://images.unsplash.com/photo-1670177257750-9b47927f68eb" alt="Luxury Watch">
+<div class="card-content">
+<h3>
+<button type="button" onclick="showProduct(this.closest('.product-card'))">Luxury Watch</button>
+</h3>
 <div class="price">₹12,999</div>
-<button onclick="event.stopPropagation();addToCart('Luxury Watch',12999)">Add To Cart</button>
+<button type="button" onclick="addToCart('Luxury Watch',12999)">Add To Cart</button>
 </div>
 </div>
 </div>
@@ -1064,8 +1089,8 @@ Close
 
 <div id="popup-content">
 
-<span id="close-popup"
-onclick="closePopup()">✖</span>
+<button type="button" id="close-popup"
+onclick="closePopup()" aria-label="Close">✖</button>
 
 <h2 id="popup-title"></h2>
 

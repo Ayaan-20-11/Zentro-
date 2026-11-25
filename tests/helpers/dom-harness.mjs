@@ -68,7 +68,7 @@ function createElement(id = "", tagName = "div") {
 function parseProductCards(html) {
   const cards = [];
   const cardRegex =
-    /<div class="card product-card"[\s\S]*?<img src="([^"]+)">[\s\S]*?<h3>(.*?)<\/h3>[\s\S]*?<div class="price">\s*(.*?)\s*<\/div>/g;
+    /<div class="card product-card"[\s\S]*?<img\b[^>]*\bsrc="([^"]+)"[^>]*>[\s\S]*?<h3\b[^>]*>([\s\S]*?)<\/h3>[\s\S]*?<div class="price">\s*(.*?)\s*<\/div>/g;
   let match;
   while ((match = cardRegex.exec(html)) !== null) {
     const card = createElement("", "div");
@@ -77,7 +77,7 @@ function parseProductCards(html) {
     img.src = match[1];
     img._matches = "img";
     const h3 = createElement("", "h3");
-    h3.innerText = match[2].trim();
+    h3.innerText = match[2].replace(/<[^>]+>/g, "").trim();
     h3._matches = "h3";
     const price = createElement("", "div");
     price.innerText = match[3].trim();

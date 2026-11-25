@@ -1,4 +1,6 @@
 import test from "node:test";
+import fs from "node:fs";
+import path from "node:path";
 import assert from "node:assert/strict";
 import { loadHtmlApp } from "./helpers/dom-harness.mjs";
 
@@ -215,4 +217,21 @@ test("home.html: a second toast cancels the first timer and keeps its full 2 sec
   assert.equal(last.ms, 2000);
   last.fn();
   assert.equal(toast.classList.contains("show"), false);
+});
+
+test("home.html and index.html: cart trigger, close icon and product cards use keyboard-reachable buttons", () => {
+  const home = fs.readFileSync(path.join(process.cwd(), "home.html"), "utf8");
+  const index = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf8");
+
+  assert.match(home, /<button type="button" class="cart-button" onclick="openCart\(\)" aria-label="Open cart">/);
+  for (const page of [home, index]) {
+    assert.match(page, /<button type="button"[^>]*id="close-popup"[^>]*aria-label="Close"/);
+    assert.doesNotMatch(page, /<span[^>]*id="close-popup"/);
+  }
+  assert.doesNotMatch(home, /class="card product-card"\s*onclick=/);
+  assert.doesNotMatch(home, /event\.stopPropagation\(\);addToCart/);
+
+  const { productCards } = loadHtmlApp("home.html");
+  assert.equal(productCards.length, 16);
+  assert.equal(productCards[0]._children[1].innerText, "iPhone 16");
 });

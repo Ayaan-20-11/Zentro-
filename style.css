@@ -103,6 +103,14 @@ margin:15px 0;
 
 #close-popup{
 
+background:none;
+
+border:none;
+
+padding:0;
+
+color:inherit;
+
 cursor:pointer;
 
 font-size:22px;
