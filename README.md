@@ -66,6 +66,7 @@ Zentro distinguishes clearly between **implemented client-side UI features** and
 - **Product Quick-View Modal:** Clicking any product card opens `#product-popup` with its title, image, price, and an **Add To Cart** button.
 - **Shopping Cart with `localStorage` Persistence:** Slide-out `#cart-sidebar` that persists items across page reloads via `localStorage.getItem("cart")`.
 - **Quantity Management:** Increment (`+`), decrement (`-`, removing items at `0`), clear cart (`Reset`), live navbar item count badge, and formatted total calculation (`₹`).
+- **Free Delivery Progress Bar:** Cart sidebar shows how much more is needed to reach `₹5,000` for free delivery, with an animated progress bar that turns green once unlocked.
 - **UI Animations & Dark Glassmorphic Design:**
   - Animated Zentro Bot (floating loop, blinking eyes, input focus/typing tilt), floating background particles, and cursor-follow glow on `index.html`.
   - Scroll reveal transitions (`.reveal`), card hover lift, `IntersectionObserver`-triggered stats counters (`10K+`, `500+`, `24/7`), and slide-in toast notifications on `home.html`.

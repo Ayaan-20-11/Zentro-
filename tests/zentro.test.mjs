@@ -235,3 +235,65 @@ test("home.html and index.html: cart trigger, close icon and product cards use k
   assert.equal(productCards.length, 16);
   assert.equal(productCards[0]._children[1].innerText, "iPhone 16");
 });
+
+test("home.html: getShippingProgress covers empty, partial, exact, over-threshold and invalid totals", () => {
+  const { context } = loadHtmlApp("home.html");
+
+  const empty = context.getShippingProgress(0);
+  assert.equal(empty.percent, 0);
+  assert.equal(empty.remaining, 5000);
+  assert.equal(empty.unlocked, false);
+  assert.equal(empty.message, "Add ₹5,000 more for Free Delivery 🚚");
+
+  const partial = context.getShippingProgress(2999);
+  assert.equal(partial.percent, 60);
+  assert.equal(partial.remaining, 2001);
+  assert.equal(partial.message, "Add ₹2,001 more for Free Delivery 🚚");
+
+  const exact = context.getShippingProgress(5000);
+  assert.equal(exact.percent, 100);
+  assert.equal(exact.unlocked, true);
+  assert.equal(exact.message, "🎉 You unlocked Free Delivery!");
+
+  assert.equal(context.getShippingProgress(5998).percent, 100);
+  assert.equal(context.getShippingProgress(-50).percent, 0);
+  assert.equal(context.getShippingProgress(NaN).percent, 0);
+});
+
+test("home.html: free shipping bar starts at 0%, tracks cart changes, unlocks at ₹5,000 and resets", () => {
+  const app = loadHtmlApp("home.html");
+  const { document, context } = app;
+  const status = document.getElementById("shipping-status");
+  const bar = document.getElementById("shipping-progress-bar");
+
+  assert.equal(status.innerText, "Add ₹5,000 more for Free Delivery 🚚");
+  assert.equal(bar.style.width, "0%");
+
+  context.addToCart("Headphones", 2999);
+  assert.equal(status.innerText, "Add ₹2,001 more for Free Delivery 🚚");
+  assert.equal(bar.style.width, "60%");
+  assert.equal(bar.classList.contains("unlocked"), false);
+
+  context.addToCart("Headphones", 2999);
+  assert.equal(status.innerText, "🎉 You unlocked Free Delivery!");
+  assert.equal(bar.style.width, "100%");
+  assert.equal(bar.classList.contains("unlocked"), true);
+
+  context.decreaseQuantity("Headphones");
+  assert.equal(bar.style.width, "60%");
+  assert.equal(bar.classList.contains("unlocked"), false);
+
+  context.addToCart("Headphones", 2999);
+  context.clearCart();
+  assert.equal(status.innerText, "Add ₹5,000 more for Free Delivery 🚚");
+  assert.equal(bar.style.width, "0%");
+  assert.equal(bar.classList.contains("unlocked"), false);
+});
+
+test("home.html: free shipping bar reflects a cart restored from localStorage", () => {
+  const saved = JSON.stringify([{ name: "Smart Watch", price: 4999, quantity: 1 }]);
+  const { document } = loadHtmlApp("home.html", { cart: saved });
+
+  assert.equal(document.getElementById("shipping-status").innerText, "Add ₹1 more for Free Delivery 🚚");
+  assert.equal(document.getElementById("shipping-progress-bar").style.width, "99%");
+});
